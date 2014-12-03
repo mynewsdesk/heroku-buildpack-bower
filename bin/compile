@@ -27,7 +27,8 @@ mkdir -p $bower_cache_home
 
 status "Installing bower dependencies"
 
+cd $build_dir
+
 bower install --production \
-  --config.cwd=$build_dir \
   --config.storage.packages=$bower_cache_home/packages \
   --config.storage.registry=$bower_cache_home/registry
