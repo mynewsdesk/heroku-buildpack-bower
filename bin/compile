@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e            # fail fast
+set -o pipefail   # don't ignore exit codes when piping output
+# set -x          # enable debugging
+
+status() { echo "-----> $*" }
+
+# Configure directories
+build_dir=$1
+cache_dir=$2
+env_dir=$3
+bower_cache_home=$cache_dir/bower
+
+# Export all the config
+if [ -d "$env_dir" ]; then
+  for e in $(ls $env_dir); do
+    export "$e=$(cat $env_dir/$e)"
+  done
+fi
+
+PATH=$build_dir/vendor/node/bin:$build_dir/node_modules/.bin:$PATH
+
+mkdir -p $bower_cache_home
+
+status "Installing bower dependencies"
+
+bower install --production \
+  --config.cwd=$build_dir \
+  --config.storage.packages=$bower_cache_home/packages \
+  --config.storage.registry=$bower_cache_home/registry
