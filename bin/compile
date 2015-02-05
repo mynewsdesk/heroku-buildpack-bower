@@ -23,6 +23,8 @@ fi
 
 PATH=$build_dir/vendor/node/bin:$build_dir/node_modules/.bin:$PATH
 
+bower -v || npm install -g bower
+
 mkdir -p $bower_cache_home
 
 status "Installing bower dependencies"
